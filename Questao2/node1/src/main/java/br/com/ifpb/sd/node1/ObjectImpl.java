@@ -5,7 +5,6 @@ import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -30,8 +29,10 @@ public class ObjectImpl extends UnicastRemoteObject implements ObjectShared {
     public int operation2(int n1, int n2) throws RemoteException {
         System.out.println("Requisição recebida, node1...");
         try {
-            Registry reg = LocateRegistry.getRegistry(1092);
-            ObjectShared shared = (ObjectShared) reg.lookup("rmi:node3");
+//            Registry reg = LocateRegistry.getRegistry(1092);            
+            ObjectShared shared = (ObjectShared) LocateRegistry.
+                    getRegistry("no3", 1092).
+                    lookup("rmi:/no3");
             return shared.operation2(n1, n2);
         } catch (NotBoundException | AccessException ex) {
             ex.printStackTrace();

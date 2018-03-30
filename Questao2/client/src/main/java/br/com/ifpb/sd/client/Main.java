@@ -4,7 +4,6 @@ import br.com.ifpb.sd.shared.ObjectShared;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 /**
  *
@@ -14,8 +13,10 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Registry reg = LocateRegistry.getRegistry(1090);
-            ObjectShared shared = (ObjectShared) reg.lookup("rmi:node1");
+//            Registry reg = LocateRegistry.getRegistry(1090);
+            ObjectShared shared = (ObjectShared) LocateRegistry.
+                    getRegistry("no1", 1090).
+                    lookup("rmi:/no1");            
             int operation1 = shared.operation1(10, 20);
             int operation2 = shared.operation2(10, 20);
             System.out.println("Resultado da operação 1: " + operation1);

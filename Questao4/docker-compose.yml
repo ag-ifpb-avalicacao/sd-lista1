@@ -1,0 +1,69 @@
+version: '2.1'
+
+services:
+  banco1:
+    image: banco1
+    build: ./postgres1
+    container_name: banco1
+    ports:
+       - "5433:5432"
+    healthcheck:
+        test: "exit 0" 
+    networks:
+      main:
+        aliases:
+          - banco1
+
+  banco2:
+    image: banco2
+    build: ./postgres2
+    container_name: banco2
+    healthcheck:
+        test: "exit 0"
+    ports:
+       - "5434:5432"
+    networks:
+      main:
+        aliases:
+          - banco2
+
+  node1:
+    image: node1
+    build: ./node1
+    container_name: node1_app
+    depends_on:
+        node2:
+            condition: service_healthy
+    links:
+      - "node2:host-rmi"
+    healthcheck:
+        test: "exit 0"
+    networks:
+        main:
+          aliases:
+            - no1
+
+  node2:
+    image: node2
+    build: ./node2
+    container_name: node2_app
+    ports:
+       - "1099:1099"
+    depends_on:
+        banco1:
+            condition: service_healthy
+        banco2:
+            condition: service_healthy
+    healthcheck:
+        test: "exit 0"
+    links:
+      - "banco1:host-banco1"
+      - "banco2:host-banco2"
+    networks:
+      main:
+        aliases:
+          - no2
+
+networks:
+  main:
+    driver: bridge

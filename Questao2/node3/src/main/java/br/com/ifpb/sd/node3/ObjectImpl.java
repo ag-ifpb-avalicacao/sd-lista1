@@ -5,7 +5,6 @@ import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -27,16 +26,21 @@ public class ObjectImpl extends UnicastRemoteObject implements ObjectShared {
         // Node 1
         try {     
             // Busca o objeto atraves de um registro (a partir de uma porta e um nome identificador)
-            Registry reg = LocateRegistry.getRegistry(1090);
-            ObjectShared comp = (ObjectShared) reg.lookup("rmi:node1");
+//            Registry reg = LocateRegistry.getRegistry(1090);
+            
+            ObjectShared comp = (ObjectShared) LocateRegistry.
+                    getRegistry("no1", 1090).
+                    lookup("rmi:/no1");
             return comp.operation1(n1, n2);
         } catch (NotBoundException | AccessException ex) {
             System.out.println("Nao conseguiu requisitar a ação ao node1");
         }
         // Node 2
         try {
-            Registry reg = LocateRegistry.getRegistry(1091);
-            ObjectShared comp = (ObjectShared) reg.lookup("rmi:node2");
+//            Registry reg = LocateRegistry.getRegistry(1091);
+            ObjectShared comp = (ObjectShared) LocateRegistry.
+                    getRegistry("no2", 1091).
+                    lookup("rmi:/no2");
             return comp.operation1(n1, n2);
         } catch (NotBoundException | AccessException ex) {
             System.out.println("Nao conseguiu requisitar a ação ao node2");
