@@ -16,7 +16,7 @@ import request.reply.Server;
  */
 public class Main {
 
-    // 2000
+    // 2000 - 2012
     public static void main(String[] args) throws SocketException,
             Base64DecodingException, IOException, ClassNotFoundException {
         Server server = new Server(2012);
@@ -36,9 +36,9 @@ public class Main {
         byte[] response;
         Client client = new Client();
         if (m.getOperationId() == 1) {
-            response = client.doOperation(new RemoteRef("localhost", 2014), m, 2001);
+            response = client.doOperation(new RemoteRef("no4", 2014), m, 2001);
         } else {
-            response = client.doOperation(new RemoteRef("localhost", 2013), m, 2001);
+            response = client.doOperation(new RemoteRef("no3", 2013), m, 2001);
         }
         return response;
     }

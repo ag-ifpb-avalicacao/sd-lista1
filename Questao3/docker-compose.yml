@@ -1,0 +1,62 @@
+version: '2.1'
+
+services:
+  node1:
+    image: node1
+    build: ./node1
+    container_name: node1
+    depends_on:
+        node2:
+            condition: service_healthy
+        node3:
+            condition: service_healthy
+        node4:
+            condition: service_healthy
+    healthcheck:
+        test: "exit 0"
+    networks:
+        main:
+          aliases:
+            - no1
+
+  node2:
+    image: node2
+    build: ./node2
+    container_name: node2
+    ports:
+       - "2012:2012"
+    healthcheck:
+        test: "exit 0"
+    networks:
+      main:
+        aliases:
+          - no2
+
+  node3:
+    image: node3
+    build: ./node3
+    container_name: node3
+    ports:
+       - "2013:2013"
+    healthcheck:
+        test: "exit 0"
+    networks:
+      main:
+        aliases:
+          - no3
+
+  node4:
+    image: node4
+    build: ./node4
+    container_name: node4
+    ports:
+       - "2014:2014"
+    healthcheck:
+        test: "exit 0"
+    networks:
+      main:
+        aliases:
+          - no4
+networks:
+  main:
+    driver: bridge

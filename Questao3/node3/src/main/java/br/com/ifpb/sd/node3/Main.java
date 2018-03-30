@@ -36,9 +36,9 @@ public class Main {
         byte[] response;
         Client client = new Client();
         if (m.getOperationId() == 1) {
-            response = client.doOperation(new RemoteRef("localhost", 2012), m, 2002);
+            response = client.doOperation(new RemoteRef("no2", 2012), m, 2002);
         } else {
-            response = client.doOperation(new RemoteRef("localhost", 2014), m, 2002);
+            response = client.doOperation(new RemoteRef("no4", 2014), m, 2002);
         }
         return response;
     }
