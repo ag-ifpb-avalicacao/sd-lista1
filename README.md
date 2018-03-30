@@ -1,6 +1,6 @@
 # Para executar as questões, realizar os seguintes passos:
 
-### Questões 1, 2, 3 e 4:
+### Questões 1, 2, 3 e 4 (Implantadas no Docker):
 ###### - Executar o run.sh
 ###### - Caso queira derrubar aplicação executar o kill.sh
 
